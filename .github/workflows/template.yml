@@ -56,7 +56,7 @@ jobs:
 
           
   buildWebGL:
-    #needs: testRunner
+    needs: testRunner
     name: Build for WebGL 🖥️
     runs-on: ubuntu-latest
     strategy:
@@ -86,10 +86,9 @@ jobs:
             Library-build-
             Library-
       - uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: WebGL
+          versioning: Semantic
       - uses: actions/upload-artifact@v2
         with:
           name: build-WebGL
