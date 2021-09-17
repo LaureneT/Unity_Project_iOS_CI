@@ -42,12 +42,12 @@ jobs:
           restore-keys: |
             Library-test-project-
             Library-
-      - uses: game-ci/unity-test-runner@v2.0-alpha-5
+      - uses: game-ci/unity-test-runner@v2.0-alpha-6
         id: testRunner
         with:
           testMode: ${{ matrix.testMode }}
           checkName: ${{ matrix.testMode }} test results
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}      
 
       - uses: actions/upload-artifact@v2
         with:
@@ -60,7 +60,7 @@ jobs:
     name: Build for WebGL 🖥️
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -88,9 +88,10 @@ jobs:
           restore-keys: |
             Library-build-
             Library-
-      - uses: game-ci/unity-builder@v2
+      - uses: game-ci/unity-builder@v2.0-alpha-13
         with:
           targetPlatform: WebGL
+          versioning: Semantic
 
       - uses: actions/upload-artifact@v2
         with:
@@ -113,5 +114,5 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          branch: gh-pages
+          branch: gh-pages-test
           folder: build/WebGL
